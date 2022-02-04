@@ -27,7 +27,7 @@ dat1 <- dat %>%
 		select(!(contains(c("Charges", "tenure", "customerID"))))
 
 for (predictor in names(dat1)){
-				print(predictor)
+				#print(predictor)
 	dfplot <- dat1 %>%
 		select(predictor) %>%
 		mutate(value=.[[1]]) %>%
@@ -64,14 +64,14 @@ dat1 <- dat %>%
 
 for (predictor in names(dat1)){
 
-				print(predictor)
+				#print(predictor)
 	dfplot <- dat1 %>%
 		select(predictor) %>%
 		mutate(value=.[[1]])
 
 	p1 <- ggplot(dfplot) +
 		geom_histogram(aes(x=value), fill=col_sr_unnamed[1], colour='black', alpha=0.75) +
-	  labs(title=predictor, x = 'value' y = 'count',) +
+	  labs(title=predictor, x = 'value', y = 'count') +
 		theme_sr() +
 		theme(axis.text.x=element_text(angle=0, hjust=0, vjust=1))
 
