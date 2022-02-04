@@ -3,7 +3,6 @@
 ########################################
 
 library(tidyverse)
-source("theme-vsgls.R")
 filedateprefix <- format(Sys.time(), "%Y%m%d")
 figdirprefix <- '../figs/'
 
