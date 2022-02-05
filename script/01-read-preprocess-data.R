@@ -3,6 +3,10 @@
 ########################################
 
 library(tidyverse)
+library(fastDummies)
+library(caret)
+library(reshape2)
+
 filedateprefix <- format(Sys.time(), "%Y%m%d")
 figdirprefix <- '../figs/'
 
@@ -24,4 +28,11 @@ summary(datraw)
 
 # Any preprocessing goes here.
 
-dat <- datraw 
+dat <- datraw  %>%
+		drop_na() # remove some lines with NA observations
+
+
+dat_dummy <- dat %>%
+		select(-customerID) %>%
+		dummy_cols(remove_selected_columns=TRUE)
+
