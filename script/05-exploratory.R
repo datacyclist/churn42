@@ -35,7 +35,7 @@ for (predictor in names(dat1)){
 		#group_by_at(vars(one_of(predictor))) %>%
 		summarise(counts=n()) 
 
-		print(str(dfplot))
+#		print(str(dfplot))
 
 	p1 <- ggplot(dfplot) +
 		geom_col(aes(x=value, y=counts, fill=value), position="dodge", colour='black', alpha=0.75) +
@@ -56,15 +56,14 @@ for (predictor in names(dat1)){
 }
 
 ##############################
-# images of the numerics
+# images of all the numerics
 ##############################
 
 dat1 <- dat %>%
-		select((contains(c("Charges", "tenure", "customerID"))))
+		select((contains(c("Charges", "tenure"))))
 
 for (predictor in names(dat1)){
 
-				#print(predictor)
 	dfplot <- dat1 %>%
 		select(predictor) %>%
 		mutate(value=.[[1]])
@@ -83,9 +82,58 @@ for (predictor in names(dat1)){
 }
 
 ##############################
-# next: 
+# correlation heatmap
+##############################
+
+
+dfplot <- dat_dummy %>%
+					cor() %>%
+					melt()
+
+p1 <- ggplot(dfplot) +
+		geom_tile(aes(x=Var1, y=Var2, fill=value), alpha=0.89) +
+	  labs(title="pairwise correlations between variables", x = '', y = '') +
+		theme_sr() +
+		scale_fill_continuous(high = col_sr_unnamed[1], low=col_sr_unnamed[4]) +
+		theme(axis.text.x=element_text(angle=60, hjust=1, vjust=1))
+
+png(filename=paste(figdirprefix, filedateprefix, "_heatmap-correlations.png", sep=''),
+			width=1500, height=1400)
+	 print(p1)
+dev.off()
+
+# so there are at least some correlations between the factors and churn
 #
-# - heatmap 
+# also: totalcharges and monthlycharges and tenure are positively correlated
+
+
+##############################
+# highest correlations
+##############################
+
+# filter high correlations with Churn=yes
+dfplot_highcor <- dfplot %>%
+				filter(Var1=="Churn_Yes" & abs(value)>0.25) %>%
+				filter(!(Var2=="Churn_Yes" | Var2=="Churn_No"))
+
+p1 <- ggplot(dfplot_highcor) +
+		geom_col(aes(x=Var2, y=value), fill=col_sr_unnamed[2], alpha=0.85) +
+	  labs(title="strongest correlations with Churn=Yes", x = '', y = '') +
+		theme_sr() +
+		coord_flip() +
+		#scale_fill_continuous(high = col_sr_unnamed[1], low=col_sr_unnamed[4]) +
+		theme(axis.text.x=element_text(angle=0, hjust=0.5, vjust=1))
+
+png(filename=paste(figdirprefix, filedateprefix, "_highest-correlations-with-churn.png", sep=''),
+			width=1000, height=500)
+	 print(p1)
+dev.off()
+
+# okay, there's definitely some information that might help in predicting churn here
+
+
+##############################
+# next: 
 #
 # - figures for each variable in relation to churn
 ##############################
