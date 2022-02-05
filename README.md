@@ -15,8 +15,9 @@ in the /script directory.
 
 ## target variable
 
-The churn rate in the data set is around 25%.
 <img alt="Churn Rate" src="figs/20220204_predictor_Churn-distribution.png?raw=true" width="400">
+
+- The churn rate in the data set is around 25%.
 
 ## predictors
 
@@ -102,6 +103,33 @@ more over time
 
 - A fun distribution, ranging from zero to 72 months.
 
+# Correlations with churn
+
+## heatmap
+
+Get a quick heatmap: how are the variables related to each other?
+
+<img alt="correlation heatmap" src="figs/20220204_heatmap-correlations.png?raw=true" width="400">
+
+- The line with *churn=YES* shows at least some non-zero patterns. Phew.
+- The "no internet service" values in the different predictors are fully
+	correlated. Makes sense.
+- Monthly/total charges seem to be somehow correlated to the additional
+	services like online security, backup etc. Makes sense, too.
+
+## correlations
+
+<img alt="strongest correlations with churn" src="figs/20220205_highest-correlations-with-churn.png?raw=true" width="400">
+
+This gives an idea on the single predictors which are correlated with churn. Seems to make sense.
+
+- two-year contracts -> less churn
+- month-to-month contracts -> more churn
+- the longer the tenure, the less churn (this is kind of obvious and circular, but good to see)
+- having additional contract features could lead to less churn (what the graphic says, just expressed the other way around)
+- having a fiber optic service is highly correlated with churn
+
+
 # descriptive with relation to churn
 
 If we split up the dataset into *churn=yes* and *churn=no* and compare the distributions of 
@@ -185,4 +213,27 @@ no difference in the distributions.
 
 # predictive model 
 
+- The data is not too big and complex, I'll just go with a glm here. 
+- The principle would be pretty much the same for other models. 
+    - Take all the predictors above (or maybe a subset, I could refine this further) 
+    - Train the model to predict churn on a training set. 
+		- Calculate model accuracy on the test set.
+- The baseline accuracy that I would have to beat is 73% (predicting *churn=no* all the time).
 
+<img alt="model summary" src="figs/20220205_modelsummary-glm.png?raw=true" width="500">
+
+- The pretty simple model yields around 80% accuracy.
+- The most important predictors are listed. These and the trained model can be used to identify the customers who are likely to churn and to identify measures that could be taken.
+
+
+Some ideas purely from the data, which probably don't always make sense:
+- Try to get customers away from *PaymentMethod=electronic check*
+- Upsell them to OnlineSecurity=yes and OnlineBackup=yes
+- Get customers away from fiber optic (good from a retention point of view but certainly not from a technology point of view).
+- Get them away from month-to-month contracts (this is quite logical).
+- Get them to pay higher total charges (maybe by upselling them).
+
+# further thoughts
+
+- In a real context, the subset of customers for which I would predict churn
+should probably be only those who haven't churned yet.
