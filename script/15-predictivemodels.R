@@ -44,31 +44,31 @@ plot_importances <- ggplot(importances) +
 	geom_col(aes(x=variable, y=Overall), fill=col_sr_unnamed[4], alpha=0.85) +
 	theme_sr() + 
 	coord_flip() + 
-	labs(title="Classification model, important predictors",
+	labs(title="Churn prediction model, importance of predictors",
 			 x = '', y = '')
 
 
-dfacc <- data.frame(Overall = accuracy, variable="model accuracy", group="model performance")
+dfacc <- data.frame(Overall = accuracy, variable="accuracy", group="model performance")
 plot_accuracy <- ggplot(dfacc) +
 	geom_col(aes(x=variable, y=Overall), fill=col_sr_unnamed[1], alpha=0.85) +
 	theme_sr() + 
-	coord_flip() + 
-	labs(title="Classification model, model accuracy",
-			 x = '', y = '')
+	#coord_flip() + 
+	labs(title="", x = 'model', y = 'accuracy')
 
 
 p1 <- ggarrange(plot_accuracy, plot_importances, 
-								heights = c(2, 8),
-					      ncol = 1, nrow = 2)
+								widths = c(1, 8),
+					      ncol = 2, nrow = 1)
 
 png(filename=paste(figdirprefix, filedateprefix, "_modelsummary-glm.png", sep=''),
 		width=1300, height=600)
  print(p1)
 dev.off()
 
-# so, the model has an accuracy of 0.8, which is better than the default naive baseline of 0.73
+# so, the model has an accuracy of 0.8, which is better than the default naive
+# baseline of 0.73 when I'd just predict Churn=No all the time.
  
-
+# the rest is more or less interpretation of the model results using the earlier graphics. see readme.md
 
 
 
