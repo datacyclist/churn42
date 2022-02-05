@@ -19,14 +19,16 @@ figdirprefix <- '../figs/'
 datraw <- read_csv(file='https://raw.githubusercontent.com/treselle-systems/customer_churn_analysis/master/WA_Fn-UseC_-Telco-Customer-Churn.csv',
 col_types='cflffnffffffffffffnnf')
 
-# nice. formatted and clean data. We'll see.
+# Nice. For once, formatted and clean data. We'll see.
 
 summary(datraw)
 
 # So those are the customers we have/had in Q1-Q2/2021. I'm supposed to predict
 # churn in Q3/2021.
 
+##############################
 # Any preprocessing goes here.
+##############################
 
 dat <- datraw  %>%
 		drop_na() # remove some lines with NA observations
@@ -35,4 +37,18 @@ dat <- datraw  %>%
 dat_dummy <- dat %>%
 		select(-customerID) %>%
 		dummy_cols(remove_selected_columns=TRUE)
+
+##############################
+# Create train and test sets
+##############################
+
+fulldat <- dat %>%
+	  mutate(Churn = ifelse(Churn == 'Yes',1,0))
+
+samplesize <- ceiling(0.80 * nrow(dat))
+set.seed(42) # what else could it be?
+train_samples <- sample(seq_len(nrow(dat)), replace=FALSE, size = samplesize)
+
+train <- dat[train_samples, ]
+test <- dat[-train_samples, ]
 
