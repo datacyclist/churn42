@@ -109,7 +109,7 @@ more over time
 
 Get a quick heatmap: how are the variables related to each other?
 
-<img alt="correlation heatmap" src="figs/20220204_heatmap-correlations.png?raw=true" width="400">
+<img alt="correlation heatmap" src="figs/20220205_heatmap-correlations.png?raw=true" width="500">
 
 - The line with *churn=YES* shows at least some non-zero patterns. Phew.
 - The "no internet service" values in the different predictors are fully
