@@ -168,18 +168,18 @@ no difference in the distributions.
 
 - Electronic Check is by far the worst payment method when it comes to churn. Try to get customers away from this payment method.
 
-<img alt="MonthlyCharges" src="figs/20220205_churngroups_predictor_MonthlyCharges-distribution.png?raw=true" width="500">
+<img alt="MonthlyCharges" src="figs/20220205_churngroups_predictor_numeric_MonthlyCharges-distribution.png?raw=true" width="500">
 
 - Customers with expensive contracts churn more often than those with cheap contracts.
 
-<img alt="TotalCharges" src="figs/20220205_churngroups_predictor_TotalCharges-distribution.png?raw=true" width="500">
+<img alt="TotalCharges" src="figs/20220205_churngroups_predictor_numeric_TotalCharges-distribution.png?raw=true" width="500">
 
 - Customers with small Total Charges churn more often. 
 - But it could also be the other way around: because they churn they don't run up that many total charges. 
 - And on the other end of the spectrum: the more total charges, the less likely to churn.
 
 ## duration of contract
-<img alt="tenure" src="figs/20220205_churngroups_predictor_tenure-distribution.png?raw=true" width="500">
+<img alt="tenure" src="figs/20220205_churngroups_predictor_numeric_tenure-distribution.png?raw=true" width="500">
 
 - Short tenure = high churn. Causality can go both ways here, also on the right end of the graphic.
 
