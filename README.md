@@ -213,11 +213,13 @@ no difference in the distributions.
 
 # predictive model 
 
+## model building
+
 - The data is not too big and complex, I'll just go with a glm here. 
 - The principle would be pretty much the same for other models. 
     - Take all the predictors above (or maybe a subset, I could refine this further) 
     - Train the model to predict churn on a training set. 
-		- Calculate model accuracy on the test set.
+    - Calculate model accuracy on the test set.
 - The baseline accuracy that I would have to beat is 73% (predicting *churn=no* all the time).
 
 <img alt="model summary" src="figs/20220205_modelsummary-glm.png?raw=true" width="500">
@@ -225,6 +227,7 @@ no difference in the distributions.
 - The pretty simple model yields around 80% accuracy.
 - The most important predictors are listed. These and the trained model can be used to identify the customers who are likely to churn and to identify measures that could be taken.
 
+## recommendations
 
 Some ideas purely from the data, which probably don't always make sense:
 - Try to get customers away from *PaymentMethod=electronic check*
