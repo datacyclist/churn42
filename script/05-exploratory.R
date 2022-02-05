@@ -108,7 +108,7 @@ dev.off()
 
 
 ##############################
-# highest correlations
+# highest correlations with Churn
 ##############################
 
 # filter high correlations with Churn=yes
@@ -131,9 +131,42 @@ dev.off()
 
 # okay, there's definitely some information that might help in predicting churn here
 
+##############################
+# compare distributions for variables between groups (churn=yes vs. churn=no)
+##############################
 
 ##############################
-# next: 
-#
-# - figures for each variable in relation to churn
+# images of all the factors 
 ##############################
+
+dat1 <- dat %>%
+		select(!(contains(c("Charges", "tenure", "customerID"))))
+
+for (predictor in names(dat1)){
+	dfplot <- dat1 %>%
+		select(predictor,Churn) %>%
+		mutate(value=.[[1]]) %>%
+		group_by(Churn,value) %>%
+		summarise(counts=n()) 
+
+	p1 <- ggplot(dfplot) +
+		geom_col(aes(x=Churn, y=counts, fill=value), position="fill", colour='black', alpha=0.75) +
+		coord_flip()  +
+	  scale_fill_manual(values=col_sr_unnamed, guide = guide_legend(reverse = TRUE))  +
+	  labs(title=predictor,
+	     y = 'relative distribution',
+			 x = 'Churn?'
+			 ) +
+		theme_sr() +
+		theme(axis.text.x=element_text(angle=0, hjust=0.5, vjust=0.5))
+
+	png(filename=paste(figdirprefix, filedateprefix, "_churngroups_predictor_", predictor, "-distribution.png", sep=''),
+			width=800, height=250)
+	 print(p1)
+	dev.off()
+
+}
+
+# some nice figures and relationships here. More in the readme.md.
+
+
