@@ -167,6 +167,37 @@ for (predictor in names(dat1)){
 
 }
 
+##############################
+# images of the numerics
+##############################
+
+dat1 <- dat %>%
+		select((contains(c("Charges", "tenure", "Churn"))))
+
+for (predictor in names(dat1)){
+
+	dfplot <- dat1 %>%
+		select(predictor, Churn) %>%
+		mutate(value=.[[1]])
+
+	p1 <- ggplot(dfplot) +
+		geom_density(aes(x=value, y=..density.., fill=Churn), colour='black', alpha=0.75) +
+		#coord_flip()  +
+	  scale_fill_manual(values=col_sr_unnamed[c(4,1)], guide = guide_legend(reverse = TRUE))  +
+	  labs(title=predictor,
+	     y = 'relative distribution (sum of area=1)',
+			 x = ''
+			 ) +
+		theme_sr() +
+		theme(axis.text.x=element_text(angle=0, hjust=0.5, vjust=0.5))
+
+	png(filename=paste(figdirprefix, filedateprefix, "_churngroups_predictor_numeric_", predictor, "-distribution.png", sep=''),
+			width=600, height=550)
+	 print(p1)
+	dev.off()
+
+}
+
 # some nice figures and relationships here. More in the readme.md.
 
 
