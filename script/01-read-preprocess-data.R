@@ -52,3 +52,5 @@ train_samples <- sample(seq_len(nrow(dat)), replace=FALSE, size = samplesize)
 train <- dat[train_samples, ]
 test <- dat[-train_samples, ]
 
+# of course: this is a one-off sampling. This has to be repeated a lot of times and
+# the prediction error should be summarised afterwards (e.g. averaged).
