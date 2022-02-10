@@ -8,6 +8,10 @@ most likely going to churn in the next quarter. By doing so, the company can
 proactively do its best to avoid customers from churning - by for instance
 proposing customers with a better deal.
 
+Attention: this is no productive code. This shows how to approach the problem
+and how it might be solved building a predictive model -- but those are just
+the first steps towards a bullet-proof model on this dataset.
+
 Howto: this is mostly a graphical drilldown and a model in the end. The code is
 in the /script directory.
 
